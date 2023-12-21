@@ -43,6 +43,14 @@
                 "apiKey": "",
                 "systemId": 1
         }]
+    },
+    {
+        "name": "MQTTStats",
+        "library": "libmqtt_status_plugin.so",
+        "broker": "tcp://mosquitto:1883",
+        "topic": "trunkrecorder/feeds",
+        "username": "trunkrecorder",
+        "password": "" 
     }],
     "uploadServer": "https://api.openmhz.com"
 }

@@ -31,4 +31,14 @@ services:
       - /opt/stacks/trunk-recorder/tone-detector/etc:/icad/etc
       - /opt/stacks/trunk-recorder/tone-detector/audio:/icad/audio
       - /opt/stacks/trunk-recorder/tone-detector/logs:/icad/log
+  mosquitto:
+    image: eclipse-mosquitto
+    container_name: mosquitto
+    ports:
+      - "1883:1883" #default mqtt port
+      - "9001:9001" #default mqtt port for websockets
+    volumes:
+      - /opt/stacks/trunk-recorder/mosquitto/config:/mosquitto/config:rw
+      - /opt/stacks/trunk-recorder/mosquitto/data:/mosquitto/data:rw
+      - /opt/stacks/trunk-recorder/mosquitto/log:/mosquitto/log:rw
 networks: {}

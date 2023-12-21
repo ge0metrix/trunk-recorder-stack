@@ -14,3 +14,9 @@ trunk-recorder/capture/*
 
 rdio-scanner/data/*
 !rdio-scanner/data/.keep
+mosquitto/config/*
+!mosquitto/config/.keep
+mosquitto/data/*
+!mosquitto/data/.keep
+mosquitto/log/*
+!mosquitto/log/.keep
