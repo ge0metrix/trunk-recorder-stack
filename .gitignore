@@ -1,0 +1,16 @@
+
+*config.json
+
+tone-detector/audio/*
+!tone-detector/audio/.keep
+
+tone-detector/logs/*
+!tone-detector/logs/.keep
+tone-detector/etc/*
+!tone-detector/etc/.keep
+
+trunk-recorder/capture/*
+!trunk-recorder/capture/.keep
+
+rdio-scanner/data/*
+!rdio-scanner/data/.keep

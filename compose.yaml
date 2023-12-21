@@ -1,0 +1,34 @@
+version: "3"
+services:
+  trunk-recorder:
+    #image: robotastic/trunk-recorder:latest
+    build: /opt/stacks/trunk-recorder/trunk-recorder
+    container_name: trunk-recorder
+    restart: unless-stopped
+    privileged: true
+    working_dir: /app
+    volumes:
+      - /dev/bus/usb:/dev/bus/usb
+      - /var/run/dbus:/var/run/dbus
+      - /opt/stacks/trunk-recorder/trunk-recorder:/app
+  rdio-scanner:
+    container_name: rdio-scanner
+    environment:
+      - TZ=America/NewYork
+    image: docker.io/chuot/rdio-scanner:latest
+    ports:
+      - 3000:3000
+    volumes:
+      - /opt/stacks/trunk-recorder/rdio-scanner/data:/app/data
+  tone-detector:
+    container_name: tone-detector
+    build: /opt/stacks/trunk-recorder/tone-detector
+    environment:
+      - TZ=America/NewYork
+    ports:
+      - 8002:8002
+    volumes:
+      - /opt/stacks/trunk-recorder/tone-detector/etc:/icad/etc
+      - /opt/stacks/trunk-recorder/tone-detector/audio:/icad/audio
+      - /opt/stacks/trunk-recorder/tone-detector/logs:/icad/log
+networks: {}
