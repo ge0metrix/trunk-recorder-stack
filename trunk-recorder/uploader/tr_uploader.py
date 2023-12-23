@@ -2,6 +2,7 @@ import requests
 import sys
 import logging
 import json
+import paho.mqtt.client as mqtt
 
 logger = logging.getLogger('uploader')
 icaddata = {}
@@ -22,9 +23,12 @@ def upload_to_icad(icad_data, mp3_path, call_data):
             r.raise_for_status()
 
             logger.info(f'Successfully uploaded to iCAD API: {r.status_code}, {r.text}')
-            if(r.json()):
-                if len(r.json().get("hi_low")) >= 1 or len(r.json().get("long")) >= 1:
-                    logger.warning("TONES DETECTED!")
+            client = mqtt.Client()
+            client.connect("mosquitto")
+            logger.info(client.publish("trunkrecorder/tones",json.dumps(r.json())))
+            
+            client.disconnect()
+
     except requests.exceptions.RequestException as e:
         if r:
             logger.critical(f'Failed Uploading To iCAD API: {str(e)} {r.status_code} {r.text}')

@@ -41,4 +41,14 @@ services:
       - /opt/stacks/trunk-recorder/mosquitto/config:/mosquitto/config:rw
       - /opt/stacks/trunk-recorder/mosquitto/data:/mosquitto/data:rw
       - /opt/stacks/trunk-recorder/mosquitto/log:/mosquitto/log:rw
+  node-red:
+    image: nodered/node-red:latest
+    environment:
+      - TZ=America/NewYork
+    ports:
+      - "1880:1880"
+    volumes:
+      - node-red-data:/data
+volumes:
+  node-red-data:
 networks: {}
