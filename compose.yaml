@@ -10,7 +10,7 @@ services:
     volumes:
       - /dev/bus/usb:/dev/bus/usb
       - /var/run/dbus:/var/run/dbus
-      - /opt/stacks/trunk-recorder/trunk-recorder:/app
+      - /opt/stacks/trunk-recorder/trunk-recorder:/app:z
   rdio-scanner:
     container_name: rdio-scanner
     environment:
@@ -43,12 +43,12 @@ services:
       - /opt/stacks/trunk-recorder/mosquitto/log:/mosquitto/log:rw
   node-red:
     image: nodered/node-red:latest
+    container_name: nodered
     environment:
       - TZ=America/NewYork
     ports:
       - "1880:1880"
     volumes:
-      - node-red-data:/data
-volumes:
-  node-red-data:
+      -  /opt/stacks/trunk-recorder/node-red:/data
+      - /opt/stacks/trunk-recorder/trunk-recorder:/app:z
 networks: {}

@@ -1,7 +1,6 @@
-ARG IMAGE=robotastic/trunk-recorder:latest
-
+ARG IMAGE=trunkrecorder:edge 
 FROM ${IMAGE}
-
+#ARG IMAGE=robotastic/trunk-recorder:latest
 # add requests to python
 RUN apt update && export DEBIAN_FRONTEND=noninteractive && \ 
     apt install -y python3-pip libpaho-mqtt-dev libpaho-mqtt1.3  libpaho-mqttpp-dev libpaho-mqttpp3-1 && \

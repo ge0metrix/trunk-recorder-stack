@@ -20,3 +20,6 @@ mosquitto/data/*
 !mosquitto/data/.keep
 mosquitto/log/*
 !mosquitto/log/.keep
+
+node-red/*
+!node-red/.keep
