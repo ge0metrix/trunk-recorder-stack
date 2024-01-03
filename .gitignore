@@ -25,3 +25,5 @@ mosquitto/log/*
 
 node-red/*
 !node-red/.keep
+!node-red/flows.json
+!node-red/package.json

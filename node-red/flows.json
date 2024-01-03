@@ -1,0 +1,575 @@
+[
+    {
+        "id": "c0ad280f2a406602",
+        "type": "tab",
+        "label": "Tone Detector",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "339d223dd3f06b96",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "b31fdcba12c3f420",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "b0b23ee151923f28",
+        "type": "subflow",
+        "name": "Subflow 1",
+        "info": "",
+        "in": [],
+        "out": []
+    },
+    {
+        "id": "85cdec81b5aa80f0",
+        "type": "mqtt-broker",
+        "name": "mosquitto",
+        "broker": "mosquitto",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "0a08bcbd3294041f",
+        "type": "mqtt in",
+        "z": "c0ad280f2a406602",
+        "name": "Call End",
+        "topic": "trunkrecorder/status/call_end",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "85cdec81b5aa80f0",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 100,
+        "y": 140,
+        "wires": [
+            [
+                "cdf0adc2ed4112a5",
+                "a36346d05aed60d0",
+                "42ac89d733c38732"
+            ]
+        ]
+    },
+    {
+        "id": "cdf0adc2ed4112a5",
+        "type": "file in",
+        "z": "c0ad280f2a406602",
+        "name": "",
+        "filename": "payload.call.call_filename",
+        "filenameType": "msg",
+        "format": "",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 280,
+        "y": 100,
+        "wires": [
+            [
+                "4e6e086b5b2fb3d9"
+            ]
+        ]
+    },
+    {
+        "id": "a36346d05aed60d0",
+        "type": "change",
+        "z": "c0ad280f2a406602",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "call_data",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 290,
+        "y": 180,
+        "wires": [
+            [
+                "efc95277a64a265f"
+            ]
+        ]
+    },
+    {
+        "id": "4e6e086b5b2fb3d9",
+        "type": "function",
+        "z": "c0ad280f2a406602",
+        "name": "format file payload for merge",
+        "func": "var buffer = msg.payload;\ntmp = msg;\ntmp.payload = {};\ntmp.payload.file = buffer;\ntmp.topic = \"files\";\nreturn tmp;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 100,
+        "wires": [
+            [
+                "e2ec0d7c97a64d76"
+            ]
+        ]
+    },
+    {
+        "id": "71b1a77d3b8f4403",
+        "type": "debug",
+        "z": "c0ad280f2a406602",
+        "name": "debug 2",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1080,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "e2ec0d7c97a64d76",
+        "type": "join",
+        "z": "c0ad280f2a406602",
+        "name": "merge",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "1",
+        "count": "2",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 740,
+        "y": 140,
+        "wires": [
+            [
+                "f0be0a71c09accf4"
+            ]
+        ]
+    },
+    {
+        "id": "efc95277a64a265f",
+        "type": "function",
+        "z": "c0ad280f2a406602",
+        "name": "format call payload for merge",
+        "func": "var call = msg.payload.call\nmsg.payload = call;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 180,
+        "wires": [
+            [
+                "e2ec0d7c97a64d76"
+            ]
+        ]
+    },
+    {
+        "id": "b8b50278c24253a7",
+        "type": "http request",
+        "z": "c0ad280f2a406602",
+        "name": "",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://tone-detector:8002/tone_detect",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1090,
+        "y": 140,
+        "wires": [
+            [
+                "ea6eef795927cbac",
+                "3a2945a20aad22ad"
+            ]
+        ]
+    },
+    {
+        "id": "ea6eef795927cbac",
+        "type": "debug",
+        "z": "c0ad280f2a406602",
+        "name": "debug 1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1260,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "f0be0a71c09accf4",
+        "type": "function",
+        "z": "c0ad280f2a406602",
+        "name": "build request",
+        "func": "msg.headers = {};\nmsg.headers['Content-Type'] = 'multipart/form-data';\nmsg.headers['Accept'] = 'application/json';\nmsg.payload = {\n    \"freq\": msg.payload.call_data.freq,\n    \"start_time\": msg.payload.call_data.start_time,\n    \"stop_time\": msg.payload.call_data.stop_time,\n    \"timestamp\": msg.payload.call_data.start_time,\n    \"emergency\": msg.payload.call_data.emergency,\n    \"encrypted\": msg.payload.call_data.encrypted,\n    \"call_length\": msg.payload.call_data.length,\n    \"talkgroup\": msg.payload.call_data.talkgroup,\n    \"talkgroup_tag\": msg.payload.call_data.talkgroup_alpha_tag,\n    \"talkgroup_description\": msg.payload.call_data.talkgroup_description,\n    \"talkgroup_group_tag\": msg.payload.call_data.talkgroup_tag,\n    \"talkgroup_group\": msg.payload.call_data.talkgroup_group,\n    \"audio_type\": msg.payload.call_data.audio_type,\n    \"short_name\": msg.payload.call_data.sys_name,\n    \"file\": {\n        \"value\": msg.payload.files.file,\n        \"options\": {\n            \"filename\": msg.filename\n        }\n    }\n}\nreturn msg;\n\n/*\n\n{\n    \"freq\": 483125000,\n    \"start_time\": 1703806824,\n    \"stop_time\": 1703806838,\n    \"emergency\": 0,\n    \"priority\": 0,\n    \"mode\": 0,\n    \"duplex\": 0,\n    \"encrypted\": 0,\n    \"call_length\": 13,\n    \"talkgroup\": 1,\n    \"talkgroup_tag\": \"Westford Police\",\n    \"talkgroup_description\": \"\",\n    \"talkgroup_group_tag\": \"\",\n    \"talkgroup_group\": \"\",\n    \"audio_type\": \"analog\",\n    \"short_name\": \"westford\",\n    \"freqList\": [\n        {\n            \"freq\": 483125000,\n            \"time\": 1703806824,\n            \"pos\": 0.0,\n            \"len\": 13.33,\n            \"error_count\": \"0\",\n            \"spike_count\": \"0\"\n        }\n    ],\n    \"srcList\": [\n        {\n            \"src\": 4134,\n            \"time\": 1703806824,\n            \"pos\": 0.0,\n            \"emergency\": 0,\n            \"signal_system\": \"\",\n            \"tag\": \"\"\n        }\n    ]\n}\n\n*/",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 910,
+        "y": 140,
+        "wires": [
+            [
+                "b8b50278c24253a7",
+                "71b1a77d3b8f4403"
+            ]
+        ]
+    },
+    {
+        "id": "3a2945a20aad22ad",
+        "type": "link out",
+        "z": "c0ad280f2a406602",
+        "name": "link out 1",
+        "mode": "link",
+        "links": [
+            "14a9170f864c715a"
+        ],
+        "x": 1215,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "14a9170f864c715a",
+        "type": "link in",
+        "z": "c0ad280f2a406602",
+        "name": "link in 1",
+        "links": [
+            "3a2945a20aad22ad"
+        ],
+        "x": 85,
+        "y": 320,
+        "wires": [
+            [
+                "4e6be94183dca0c7"
+            ]
+        ]
+    },
+    {
+        "id": "4e6be94183dca0c7",
+        "type": "function",
+        "z": "c0ad280f2a406602",
+        "name": "Check for tones",
+        "func": "var dots = context.get(\"dots\", \"memoryOnly\") || \"ring\";\ndots = (dots == \"ring\") ? \"dot\" : \"ring\"\ncontext.set(\"dots\", dots, \"memoryOnly\")\n\nvar tonecount = 0\n\nif (msg.payload.quick_call !== undefined && msg.payload.hi_low !== undefined && msg.payload.long !== undefined){\n    tonecount = msg.payload.quick_call.length + msg.payload.hi_low.length + msg.payload.long.length;\n}\n\n\nnode.status({ fill: \"red\", shape: dots, text: tonecount});\nif (tonecount >= 1){\n    node.status({ fill: \"green\", shape: dots, text: tonecount });\n}\nmsg.payload.tonecount = tonecount;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 240,
+        "y": 320,
+        "wires": [
+            [
+                "d5ada4e1138f4e8d",
+                "a39968580711d7d2"
+            ]
+        ]
+    },
+    {
+        "id": "1f5e15ded75d8dab",
+        "type": "debug",
+        "z": "c0ad280f2a406602",
+        "name": "debug 4",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 900,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "d5ada4e1138f4e8d",
+        "type": "switch",
+        "z": "c0ad280f2a406602",
+        "name": "",
+        "property": "payload.tonecount",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gte",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "t": "lt",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 410,
+        "y": 320,
+        "wires": [
+            [
+                "d1e5e6b30c5451c3"
+            ],
+            [
+                "9b42865c8796de6b"
+            ]
+        ]
+    },
+    {
+        "id": "680177b4db881a4e",
+        "type": "debug",
+        "z": "c0ad280f2a406602",
+        "name": "debug 5",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 900,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "a39968580711d7d2",
+        "type": "debug",
+        "z": "c0ad280f2a406602",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 420,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "d1e5e6b30c5451c3",
+        "type": "function",
+        "z": "c0ad280f2a406602",
+        "name": "format email",
+        "func": "msg.topic = \"Tones Detected - [\" + msg.payload.talkgroup_alpha_tag + \"]\";\nmsg.from = \"geometrix@gmail.com\";\n\n\nvar message = [];\n\nmessage.push(\"Tones Detected for \");\nmessage.push(msg.payload.talkgroup_alpha_tag);\n\nmessage.push(\"\\n\\n\");\nmessage.push(\"Tones: \\n\\nQUICK CALL:\");\nmessage.push(JSON.stringify(msg.payload.quick_call));\nmessage.push(\"\\n\\nLONG: \");\nmessage.push(JSON.stringify(msg.payload.long));\nmessage.push(\"\\n\\nHI LOW: \");\nmessage.push(JSON.stringify(msg.payload.hi_low));\nmessage.push(\"\\n\\nDTMF: \");\nmessage.push(JSON.stringify(msg.payload.dtmf));\nmessage.push(\"\\n\\n\");\nmsg.payload = message.join(\"\");\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 610,
+        "y": 300,
+        "wires": [
+            [
+                "70b90011e894763a",
+                "1f5e15ded75d8dab"
+            ]
+        ]
+    },
+    {
+        "id": "9b42865c8796de6b",
+        "type": "function",
+        "z": "c0ad280f2a406602",
+        "name": "format email",
+        "func": "msg.topic = \"Tones Detected - [\" + msg.payload.talkgroup_alpha_tag + \"]\";\nmsg.from = \"geometrix@gmail.com\";\n\n  \nvar message = [];\n\nmessage.push(\"Tones Detected for \");\nmessage.push(msg.payload.talkgroup_alpha_tag);\n\nmessage.push(\"\\n\\n\");\nmessage.push(\"Tones: \\n\\nQUICK CALL:\");\nmessage.push(JSON.stringify(msg.payload.quick_call));\nmessage.push(\"\\n\\nLONG: \");\nmessage.push(JSON.stringify(msg.payload.long));\nmessage.push(\"\\n\\nHI LOW: \");\nmessage.push(JSON.stringify(msg.payload.hi_low));\nmessage.push(\"\\n\\nDTMF: \");\nmessage.push(JSON.stringify(msg.payload.dtmf));\nmessage.push(\"\\n\\n\");\nmsg.payload=message.join(\"\");\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 610,
+        "y": 340,
+        "wires": [
+            [
+                "680177b4db881a4e"
+            ]
+        ]
+    },
+    {
+        "id": "70b90011e894763a",
+        "type": "e-mail",
+        "z": "c0ad280f2a406602",
+        "server": "email-smtp.us-east-1.amazonaws.com",
+        "port": "587",
+        "authtype": "BASIC",
+        "saslformat": true,
+        "token": "oauth2Response.access_token",
+        "secure": false,
+        "tls": false,
+        "name": "geometrix@gmail.com",
+        "dname": "EmailMe",
+        "x": 900,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "42ac89d733c38732",
+        "type": "debug",
+        "z": "c0ad280f2a406602",
+        "name": "debug 7",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 280,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "6e483ea1f3201054",
+        "type": "mqtt in",
+        "z": "339d223dd3f06b96",
+        "name": "Call End",
+        "topic": "trunkrecorder/status/call_end",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "85cdec81b5aa80f0",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 160,
+        "y": 220,
+        "wires": [
+            [
+                "1691eeb81f4a8e75"
+            ]
+        ]
+    },
+    {
+        "id": "0d6d0bb7607bd759",
+        "type": "debug",
+        "z": "339d223dd3f06b96",
+        "name": "debug 6",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 440,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "9c902cf6b58dc079",
+        "type": "mqtt in",
+        "z": "339d223dd3f06b96",
+        "name": "Call Start",
+        "topic": "trunkrecorder/status/call_start",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "85cdec81b5aa80f0",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 160,
+        "y": 140,
+        "wires": [
+            [
+                "1691eeb81f4a8e75"
+            ]
+        ]
+    },
+    {
+        "id": "1691eeb81f4a8e75",
+        "type": "switch",
+        "z": "339d223dd3f06b96",
+        "name": "",
+        "property": "payload.call.sys_num",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "2",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 310,
+        "y": 180,
+        "wires": [
+            [
+                "0d6d0bb7607bd759"
+            ]
+        ]
+    }
+]

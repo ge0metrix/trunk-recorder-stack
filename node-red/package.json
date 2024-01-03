@@ -1,0 +1,11 @@
+{
+    "name": "node-red-project",
+    "description": "A Node-RED Project",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+        "node-red-dashboard": "~3.6.2",
+        "node-red-node-email": "~2.1.0",
+        "node-red-node-ui-table": "~0.4.3"
+    }
+}
