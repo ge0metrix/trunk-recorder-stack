@@ -11,6 +11,8 @@ tone-detector/etc/*
 
 trunk-recorder/capture/*
 !trunk-recorder/capture/.keep
+trunk-recorder/logs/*
+!trunk-recorder/logs/.keep
 
 rdio-scanner/data/*
 !rdio-scanner/data/.keep

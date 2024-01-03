@@ -19,7 +19,7 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - /opt/stacks/trunk-recorder/rdio-scanner/data:/app/data
+      - /opt/stacks/trunk-recorder/rdio-scanner/data:/app/data:z
   tone-detector:
     container_name: tone-detector
     build: /opt/stacks/trunk-recorder/tone-detector
@@ -49,6 +49,7 @@ services:
     ports:
       - "1880:1880"
     volumes:
-      -  /opt/stacks/trunk-recorder/node-red:/data
+      - /opt/stacks/trunk-recorder/node-red:/data
       - /opt/stacks/trunk-recorder/trunk-recorder:/app:z
+      - /opt/stacks/trunk-recorder/rdio-scanner/data:/app/data:z
 networks: {}
