@@ -1,6 +1,8 @@
 
 *config.json
 
+.venv
+
 tone-detector/audio/*
 !tone-detector/audio/.keep
 

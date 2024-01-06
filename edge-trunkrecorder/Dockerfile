@@ -61,7 +61,7 @@ RUN cd /tmp && \
 
 WORKDIR /src
 
-RUN git clone -b v5.0-max --single-branch https://github.com/robotastic/trunk-recorder.git .
+RUN git clone -b rc/v5.0 --single-branch https://github.com/robotastic/trunk-recorder.git .
 
 
 WORKDIR /src/build
