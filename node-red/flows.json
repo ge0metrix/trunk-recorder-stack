@@ -10,26 +10,18 @@
     {
         "id": "339d223dd3f06b96",
         "type": "tab",
-        "label": "Flow 1",
+        "label": "Log Units",
         "disabled": false,
         "info": "",
         "env": []
     },
     {
-        "id": "b31fdcba12c3f420",
+        "id": "0da004d3b02fc52a",
         "type": "tab",
-        "label": "Flow 2",
+        "label": "Log Calls",
         "disabled": false,
         "info": "",
         "env": []
-    },
-    {
-        "id": "b0b23ee151923f28",
-        "type": "subflow",
-        "name": "Subflow 1",
-        "info": "",
-        "in": [],
-        "out": []
     },
     {
         "id": "85cdec81b5aa80f0",
@@ -61,6 +53,12 @@
         "willMsg": {},
         "userProps": "",
         "sessionExpiry": ""
+    },
+    {
+        "id": "850761b4eea228c1",
+        "type": "sqlitedb",
+        "db": "/app/unitfiles/units.db",
+        "mode": "RWC"
     },
     {
         "id": "0a08bcbd3294041f",
@@ -157,7 +155,7 @@
         "type": "debug",
         "z": "c0ad280f2a406602",
         "name": "debug 2",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -213,7 +211,8 @@
         "y": 180,
         "wires": [
             [
-                "e2ec0d7c97a64d76"
+                "e2ec0d7c97a64d76",
+                "c6f6af57627c70a9"
             ]
         ]
     },
@@ -247,7 +246,7 @@
         "type": "debug",
         "z": "c0ad280f2a406602",
         "name": "debug 1",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -284,12 +283,13 @@
         "id": "3a2945a20aad22ad",
         "type": "link out",
         "z": "c0ad280f2a406602",
-        "name": "link out 1",
+        "name": "Tone Data Out",
         "mode": "link",
         "links": [
-            "14a9170f864c715a"
+            "14a9170f864c715a",
+            "d83283b014682dbe"
         ],
-        "x": 1215,
+        "x": 1225,
         "y": 140,
         "wires": []
     },
@@ -344,7 +344,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 900,
-        "y": 340,
+        "y": 360,
         "wires": []
     },
     {
@@ -394,7 +394,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 900,
-        "y": 380,
+        "y": 400,
         "wires": []
     },
     {
@@ -402,7 +402,7 @@
         "type": "debug",
         "z": "c0ad280f2a406602",
         "name": "debug 3",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -427,7 +427,7 @@
         "finalize": "",
         "libs": [],
         "x": 610,
-        "y": 300,
+        "y": 320,
         "wires": [
             [
                 "70b90011e894763a",
@@ -448,7 +448,7 @@
         "finalize": "",
         "libs": [],
         "x": 610,
-        "y": 340,
+        "y": 360,
         "wires": [
             [
                 "680177b4db881a4e"
@@ -469,7 +469,7 @@
         "name": "geometrix@gmail.com",
         "dname": "EmailMe",
         "x": 900,
-        "y": 300,
+        "y": 320,
         "wires": []
     },
     {
@@ -489,6 +489,19 @@
         "wires": []
     },
     {
+        "id": "c6f6af57627c70a9",
+        "type": "link out",
+        "z": "c0ad280f2a406602",
+        "name": "Call Data Out",
+        "mode": "link",
+        "links": [
+            "8f3e7d830c57b049"
+        ],
+        "x": 695,
+        "y": 180,
+        "wires": []
+    },
+    {
         "id": "6e483ea1f3201054",
         "type": "mqtt in",
         "z": "339d223dd3f06b96",
@@ -501,11 +514,11 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 160,
-        "y": 220,
+        "x": 260,
+        "y": 860,
         "wires": [
             [
-                "1691eeb81f4a8e75"
+                "0d6d0bb7607bd759"
             ]
         ]
     },
@@ -522,8 +535,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 440,
-        "y": 180,
+        "x": 540,
+        "y": 820,
         "wires": []
     },
     {
@@ -539,37 +552,999 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 160,
-        "y": 140,
+        "x": 260,
+        "y": 780,
         "wires": [
             [
-                "1691eeb81f4a8e75"
+                "0d6d0bb7607bd759"
             ]
         ]
     },
     {
-        "id": "1691eeb81f4a8e75",
+        "id": "7c65a46f8b06e374",
+        "type": "mqtt in",
+        "z": "339d223dd3f06b96",
+        "name": "",
+        "topic": "trunkrecorder/unit/#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "85cdec81b5aa80f0",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 130,
+        "y": 160,
+        "wires": [
+            [
+                "98f31d183607cb3d",
+                "6574885cee8ae9c8"
+            ]
+        ]
+    },
+    {
+        "id": "b461ef98d2382bd1",
+        "type": "debug",
+        "z": "339d223dd3f06b96",
+        "name": "debug 8",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "eff5c5955cfe9b27",
+        "type": "file",
+        "z": "339d223dd3f06b96",
+        "name": "",
+        "filename": "/app/unitfiles/unitlogs.txt",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 870,
+        "y": 160,
+        "wires": [
+            [
+                "f477059d1aecf40a"
+            ]
+        ]
+    },
+    {
+        "id": "9ea9ace76c62bd58",
+        "type": "change",
+        "z": "339d223dd3f06b96",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.end",
+                "tot": "msg",
+                "dc": true
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 520,
+        "y": 140,
+        "wires": [
+            [
+                "eff5c5955cfe9b27",
+                "b461ef98d2382bd1",
+                "9d6f91112d423598"
+            ]
+        ]
+    },
+    {
+        "id": "98f31d183607cb3d",
         "type": "switch",
         "z": "339d223dd3f06b96",
         "name": "",
-        "property": "payload.call.sys_num",
+        "property": "payload.type",
         "propertyType": "msg",
         "rules": [
             {
                 "t": "eq",
-                "v": "2",
+                "v": "end",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "call",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 330,
+        "y": 160,
+        "wires": [
+            [
+                "9ea9ace76c62bd58",
+                "759d7306b54897a9"
+            ],
+            [
+                "2b55bbc22f1100fc",
+                "ace17cefed9c2819"
+            ]
+        ]
+    },
+    {
+        "id": "2b55bbc22f1100fc",
+        "type": "change",
+        "z": "339d223dd3f06b96",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.call",
+                "tot": "msg",
+                "dc": true
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 520,
+        "y": 180,
+        "wires": [
+            [
+                "eff5c5955cfe9b27",
+                "717633646cfb60bb"
+            ]
+        ]
+    },
+    {
+        "id": "759d7306b54897a9",
+        "type": "debug",
+        "z": "339d223dd3f06b96",
+        "name": "debug 11",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 500,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "ace17cefed9c2819",
+        "type": "debug",
+        "z": "339d223dd3f06b96",
+        "name": "debug 12",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 500,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "717633646cfb60bb",
+        "type": "debug",
+        "z": "339d223dd3f06b96",
+        "name": "debug 13",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "f477059d1aecf40a",
+        "type": "debug",
+        "z": "339d223dd3f06b96",
+        "name": "debug 14",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1080,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "6574885cee8ae9c8",
+        "type": "debug",
+        "z": "339d223dd3f06b96",
+        "name": "debug 15",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 320,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "460d5cd393022d89",
+        "type": "sqlite",
+        "z": "339d223dd3f06b96",
+        "mydb": "850761b4eea228c1",
+        "sqlquery": "prepared",
+        "sql": "INSERT INTO unitdata (\nsys_num, sys_name, unit, unit_alpha_tag,\ntalkgroup, talkgroup_alpha_tag, talkgroup_description, talkgroup_group,\ntalkgroup_tag, talkgroup_patches,  call_num, freq, position, length,\nemergency, encrypted, start_time, stop_time, error_count, spike_count,\nsample_count, transmission_filename\n)\nVALUES ($sys_num, $sys_name, $unit, $unit_alpha_tag,\n$talkgroup, $talkgroup_alpha_tag, $talkgroup_description, $talkgroup_group,\n$talkgroup_tag, $talkgroup_patches,  $call_num, $freq, $position, $length,\n$emergency, $encrypted, $start_time, $stop_time, $error_count, $spike_count,\n$sample_count, $transmission_filename)",
+        "name": "insert",
+        "x": 1090,
+        "y": 100,
+        "wires": [
+            [
+                "07883dbaf3ed95dd"
+            ]
+        ]
+    },
+    {
+        "id": "9d6f91112d423598",
+        "type": "change",
+        "z": "339d223dd3f06b96",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "params.$sys_num",
+                "pt": "msg",
+                "to": "payload.sys_num",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "params.$sys_name",
+                "pt": "msg",
+                "to": "payload.sys_name",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "params.$unit",
+                "pt": "msg",
+                "to": "payload.unit",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "params.$unit_alpha_tag",
+                "pt": "msg",
+                "to": "payload.unit_alpha_tag",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "params.$talkgroup",
+                "pt": "msg",
+                "to": "payload.talkgroup",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "params.$talkgroup_alpha_tag",
+                "pt": "msg",
+                "to": "payload.talkgroup_alpha_tag",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "params.$talkgroup_description",
+                "pt": "msg",
+                "to": "payload.talkgroup_description",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "params.$talkgroup_group",
+                "pt": "msg",
+                "to": "payload.talkgroup_group",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "params.$talkgroup_tag",
+                "pt": "msg",
+                "to": "payload.talkgroup_tag",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "params.$talkgroup_patches",
+                "pt": "msg",
+                "to": "payload.talkgroup_patches",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "params.$call_num",
+                "pt": "msg",
+                "to": "payload.call_num",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "params.$freq",
+                "pt": "msg",
+                "to": "payload.freq",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "params.$position",
+                "pt": "msg",
+                "to": "payload.position",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "params.$length",
+                "pt": "msg",
+                "to": "payload.length",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "params.$emergency",
+                "pt": "msg",
+                "to": "payload.emergency",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "params.$encrypted",
+                "pt": "msg",
+                "to": "payload.encrypted",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "params.$start_time",
+                "pt": "msg",
+                "to": "payload.start_time",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "params.$stop_time",
+                "pt": "msg",
+                "to": "payload.stop_time",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "params.$error_count",
+                "pt": "msg",
+                "to": "payload.error_count",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "params.$spike_count",
+                "pt": "msg",
+                "to": "payload.spike_count",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "params.$sample_count",
+                "pt": "msg",
+                "to": "payload.sample_count",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "params.$transmission_filename",
+                "pt": "msg",
+                "to": "payload.transmission_filename",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 900,
+        "y": 120,
+        "wires": [
+            [
+                "460d5cd393022d89",
+                "be646a79568595bc"
+            ]
+        ]
+    },
+    {
+        "id": "be646a79568595bc",
+        "type": "debug",
+        "z": "339d223dd3f06b96",
+        "name": "debug 20",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1080,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "07883dbaf3ed95dd",
+        "type": "sqlite",
+        "z": "339d223dd3f06b96",
+        "mydb": "850761b4eea228c1",
+        "sqlquery": "fixed",
+        "sql": "SELECT COUNT(*) AS UnitCount FROM UnitData;",
+        "name": "",
+        "x": 1260,
+        "y": 100,
+        "wires": [
+            [
+                "06e448bc31cf4f02"
+            ]
+        ]
+    },
+    {
+        "id": "06e448bc31cf4f02",
+        "type": "debug",
+        "z": "339d223dd3f06b96",
+        "name": "debug 21",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload[0].UnitCount",
+        "statusType": "msg",
+        "x": 1460,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "36165a965273f414",
+        "type": "join",
+        "z": "0da004d3b02fc52a",
+        "name": "",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "3",
+        "count": "2",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 270,
+        "y": 100,
+        "wires": [
+            [
+                "e724958d804c0df8",
+                "a2fa0a16267ee49d"
+            ]
+        ]
+    },
+    {
+        "id": "8f3e7d830c57b049",
+        "type": "link in",
+        "z": "0da004d3b02fc52a",
+        "name": "Call Data In",
+        "links": [
+            "c6f6af57627c70a9"
+        ],
+        "x": 155,
+        "y": 120,
+        "wires": [
+            [
+                "36165a965273f414",
+                "6dbe3b27758dce81"
+            ]
+        ]
+    },
+    {
+        "id": "d83283b014682dbe",
+        "type": "link in",
+        "z": "0da004d3b02fc52a",
+        "name": "Tone Data In",
+        "links": [
+            "3a2945a20aad22ad"
+        ],
+        "x": 155,
+        "y": 80,
+        "wires": [
+            [
+                "36165a965273f414",
+                "2b67830d0abab559"
+            ]
+        ]
+    },
+    {
+        "id": "76c479678fb9ddba",
+        "type": "debug",
+        "z": "0da004d3b02fc52a",
+        "name": "debug 10",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 640,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "e724958d804c0df8",
+        "type": "change",
+        "z": "0da004d3b02fc52a",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.call_data.tones",
+                "pt": "msg",
+                "to": "{}",
+                "tot": "json"
+            },
+            {
+                "t": "move",
+                "p": "payload.files.dtmf",
+                "pt": "msg",
+                "to": "payload.call_data.tones.dtmf",
+                "tot": "msg"
+            },
+            {
+                "t": "move",
+                "p": "payload.files.hi_low",
+                "pt": "msg",
+                "to": "payload.call_data.tones.hi_low",
+                "tot": "msg"
+            },
+            {
+                "t": "move",
+                "p": "payload.files.long",
+                "pt": "msg",
+                "to": "payload.call_data.tones.long",
+                "tot": "msg"
+            },
+            {
+                "t": "move",
+                "p": "payload.files.quick_call",
+                "pt": "msg",
+                "to": "payload.call_data.tones.quick_call",
+                "tot": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "payload.files",
+                "pt": "msg"
+            },
+            {
+                "t": "move",
+                "p": "payload.call_data",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 440,
+        "y": 100,
+        "wires": [
+            [
+                "76c479678fb9ddba",
+                "64d5d7cd7e8005bd"
+            ]
+        ]
+    },
+    {
+        "id": "a2fa0a16267ee49d",
+        "type": "debug",
+        "z": "0da004d3b02fc52a",
+        "name": "debug 16",
+        "active": false,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 450,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "7bf340fbf65e465b",
+        "type": "file",
+        "z": "0da004d3b02fc52a",
+        "name": "",
+        "filename": "/app/logs/Calls.log",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 890,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2b67830d0abab559",
+        "type": "debug",
+        "z": "0da004d3b02fc52a",
+        "name": "debug 17",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 260,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "6dbe3b27758dce81",
+        "type": "debug",
+        "z": "0da004d3b02fc52a",
+        "name": "debug 18",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 260,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "64d5d7cd7e8005bd",
+        "type": "switch",
+        "z": "0da004d3b02fc52a",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "hask",
+                "v": "id",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 630,
+        "y": 100,
+        "wires": [
+            [
+                "7bf340fbf65e465b",
+                "754c91b9d3ad065c"
+            ],
+            [
+                "aaab98736a37fb37"
+            ]
+        ]
+    },
+    {
+        "id": "aaab98736a37fb37",
+        "type": "debug",
+        "z": "0da004d3b02fc52a",
+        "name": "debug 19",
+        "active": false,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 790,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "79134278d91d6e9a",
+        "type": "mqtt out",
+        "z": "0da004d3b02fc52a",
+        "name": "",
+        "topic": "transcribe/todo",
+        "qos": "1",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "85cdec81b5aa80f0",
+        "x": 1220,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "0b8adc6c6428a9c4",
+        "type": "mqtt in",
+        "z": "0da004d3b02fc52a",
+        "name": "",
+        "topic": "transcribe/done/#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "85cdec81b5aa80f0",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 250,
+        "y": 240,
+        "wires": [
+            [
+                "cc4ffd52b0bb1212",
+                "2ded182da3999d7d",
+                "2247a8a535ac8199"
+            ]
+        ]
+    },
+    {
+        "id": "cc4ffd52b0bb1212",
+        "type": "debug",
+        "z": "0da004d3b02fc52a",
+        "name": "debug 22",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 460,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "cc284d3c41d7e75a",
+        "type": "debug",
+        "z": "0da004d3b02fc52a",
+        "name": "debug 23",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1100,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "2247a8a535ac8199",
+        "type": "switch",
+        "z": "0da004d3b02fc52a",
+        "name": "",
+        "property": "payload.tonecount",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gte",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "t": "lt",
+                "v": "1",
                 "vt": "str"
             }
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 1,
-        "x": 310,
-        "y": 180,
+        "outputs": 2,
+        "x": 450,
+        "y": 320,
         "wires": [
             [
-                "0d6d0bb7607bd759"
+                "87f772649bcbe86c"
+            ],
+            [
+                "5ee85acd5f5d8092"
             ]
+        ]
+    },
+    {
+        "id": "18485060217f9c5c",
+        "type": "debug",
+        "z": "0da004d3b02fc52a",
+        "name": "debug 24",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1100,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "87f772649bcbe86c",
+        "type": "function",
+        "z": "0da004d3b02fc52a",
+        "name": "format email",
+        "func": "msg.topic = \"Tones Detected - [\" + msg.payload.talkgroup_alpha_tag + \"]\";\nmsg.from = \"geometrix@gmail.com\";\n\n\nvar message = [];\n\nmessage.push(\"Tones Detected for \");\nmessage.push(msg.payload.talkgroup_alpha_tag);\n\nmessage.push(\"\\n\\n\");\nmessage.push(\"Tones: \\n\\nQUICK CALL:\");\nmessage.push(JSON.stringify(msg.payload.tones.quick_call));\nmessage.push(\"\\n\\nLONG: \");\nmessage.push(JSON.stringify(msg.payload.tones.long));\nmessage.push(\"\\n\\nHI LOW: \");\nmessage.push(JSON.stringify(msg.payload.tones.hi_low));\nmessage.push(\"\\n\\nDTMF: \");\nmessage.push(JSON.stringify(msg.payload.tones.dtmf));\nmessage.push(\"\\n\\n\");\nmessage.push(msg.payload.transcript[0])\nmsg.payload = message.join(\"\");\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 320,
+        "wires": [
+            [
+                "910ed3d2075f9408",
+                "cc284d3c41d7e75a"
+            ]
+        ]
+    },
+    {
+        "id": "5ee85acd5f5d8092",
+        "type": "function",
+        "z": "0da004d3b02fc52a",
+        "name": "format email",
+        "func": "msg.topic = \"Tones Detected - [\" + msg.payload.talkgroup_alpha_tag + \"]\";\nmsg.from = \"geometrix@gmail.com\";\n\n\nvar message = [];\n\nmessage.push(\"Tones Detected for \");\nmessage.push(msg.payload.talkgroup_alpha_tag);\n\nmessage.push(\"\\n\\n\");\nmessage.push(\"Tones: \\n\\nQUICK CALL:\");\nmessage.push(JSON.stringify(msg.payload.tones.quick_call));\nmessage.push(\"\\n\\nLONG: \");\nmessage.push(JSON.stringify(msg.payload.tones.long));\nmessage.push(\"\\n\\nHI LOW: \");\nmessage.push(JSON.stringify(msg.payload.tones.hi_low));\nmessage.push(\"\\n\\nDTMF: \");\nmessage.push(JSON.stringify(msg.payload.tones.dtmf));\nmessage.push(\"\\n\\n\");\nmessage.push(msg.payload.transcript[0])\nmsg.payload = message.join(\"\");\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 400,
+        "wires": [
+            [
+                "18485060217f9c5c"
+            ]
+        ]
+    },
+    {
+        "id": "910ed3d2075f9408",
+        "type": "e-mail",
+        "z": "0da004d3b02fc52a",
+        "server": "email-smtp.us-east-1.amazonaws.com",
+        "port": "587",
+        "authtype": "BASIC",
+        "saslformat": true,
+        "token": "oauth2Response.access_token",
+        "secure": false,
+        "tls": false,
+        "name": "geometrix@gmail.com",
+        "dname": "EmailMe",
+        "x": 1100,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "2ded182da3999d7d",
+        "type": "file",
+        "z": "0da004d3b02fc52a",
+        "name": "",
+        "filename": "/app/logs/Callstranscribed.log",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 530,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "754c91b9d3ad065c",
+        "type": "function",
+        "z": "0da004d3b02fc52a",
+        "name": "Check for tones",
+        "func": "var dots = context.get(\"dots\", \"memoryOnly\") || \"ring\";\ndots = (dots == \"ring\") ? \"dot\" : \"ring\"\ncontext.set(\"dots\", dots, \"memoryOnly\")\n\nvar tonecount = 0\n\nif (msg.payload.tones.quick_call !== undefined && msg.payload.tones.hi_low !== undefined && msg.payload.tones.long !== undefined){\n    tonecount = msg.payload.tones.quick_call.length + msg.payload.tones.hi_low.length + msg.payload.tones.long.length;\n}\n\n\nnode.status({ fill: \"red\", shape: dots, text: tonecount});\nif (tonecount >= 1){\n    node.status({ fill: \"green\", shape: dots, text: tonecount });\n}\nmsg.payload.tonecount = tonecount;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 40,
+        "wires": [
+            [
+                "177aa3f832e8a42a"
+            ]
+        ]
+    },
+    {
+        "id": "177aa3f832e8a42a",
+        "type": "switch",
+        "z": "0da004d3b02fc52a",
+        "name": "",
+        "property": "payload.tonecount",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gte",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "t": "lt",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1030,
+        "y": 40,
+        "wires": [
+            [
+                "79134278d91d6e9a"
+            ],
+            []
         ]
     }
 ]
