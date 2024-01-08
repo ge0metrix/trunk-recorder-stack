@@ -2,6 +2,8 @@
 *config.json
 
 .venv
+.env
+
 
 tone-detector/audio/*
 !tone-detector/audio/.keep
@@ -15,7 +17,7 @@ trunk-recorder/capture/*
 !trunk-recorder/capture/.keep
 trunk-recorder/logs/*
 !trunk-recorder/logs/.keep
-
+trunk-recorder/unitfiles
 rdio-scanner/data/*
 !rdio-scanner/data/.keep
 mosquitto/config/*
