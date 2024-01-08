@@ -1,0 +1,6 @@
+FROM python:latest
+ADD requirements.txt /
+RUN pip install -r requirements.txt
+ADD transcriber.py /
+#CMD [ "python", "transcriber.py" ]
+CMD ["/bin/bash", "-c", "echo STARTING; python3 ./transcriber.py"]

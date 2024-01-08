@@ -52,4 +52,14 @@ services:
       - /opt/stacks/trunk-recorder/node-red:/data
       - /opt/stacks/trunk-recorder/trunk-recorder:/app:z
       - /opt/stacks/trunk-recorder/rdio-scanner/data:/app/data:z
+  transcriber:
+    build: /opt/stacks/trunk-recorder/Transcriber
+    container_name: transcriber
+    environment:
+      - TZ=America/NewYork
+      - AZUREKEY=${AZUREKEY}
+    volumes:
+      - /opt/stacks/trunk-recorder/trunk-recorder:/app:z
+      - /opt/stacks/trunk-recorder/rdio-scanner/data:/app/data:z
+
 networks: {}

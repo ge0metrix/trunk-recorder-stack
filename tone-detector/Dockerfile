@@ -8,4 +8,5 @@ RUN pip3 install -r requirements.txt
 
 EXPOSE 8002
 
-CMD [ "python3", "app.py" ]
+#CMD [ "python3", "app.py" ]
+CMD ["gunicorn", "-b", "0.0.0.0:8002", "app:app"] 
