@@ -86,5 +86,5 @@ def run():
     subscribe(client)
     client.loop_forever()
 
-print("Starting Transcription Watcher", AZUREKEY)
-run()
+if __name__=="__main__":
+    run()
