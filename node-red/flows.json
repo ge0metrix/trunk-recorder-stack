@@ -24,6 +24,14 @@
         "env": []
     },
     {
+        "id": "b1bc9b62280884fb",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": true,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "85cdec81b5aa80f0",
         "type": "mqtt-broker",
         "name": "mosquitto",
@@ -291,185 +299,6 @@
         ],
         "x": 1225,
         "y": 140,
-        "wires": []
-    },
-    {
-        "id": "14a9170f864c715a",
-        "type": "link in",
-        "z": "c0ad280f2a406602",
-        "name": "link in 1",
-        "links": [
-            "3a2945a20aad22ad"
-        ],
-        "x": 85,
-        "y": 320,
-        "wires": [
-            [
-                "4e6be94183dca0c7"
-            ]
-        ]
-    },
-    {
-        "id": "4e6be94183dca0c7",
-        "type": "function",
-        "z": "c0ad280f2a406602",
-        "name": "Check for tones",
-        "func": "var dots = context.get(\"dots\", \"memoryOnly\") || \"ring\";\ndots = (dots == \"ring\") ? \"dot\" : \"ring\"\ncontext.set(\"dots\", dots, \"memoryOnly\")\n\nvar tonecount = 0\n\nif (msg.payload.quick_call !== undefined && msg.payload.hi_low !== undefined && msg.payload.long !== undefined){\n    tonecount = msg.payload.quick_call.length + msg.payload.hi_low.length + msg.payload.long.length;\n}\n\n\nnode.status({ fill: \"red\", shape: dots, text: tonecount});\nif (tonecount >= 1){\n    node.status({ fill: \"green\", shape: dots, text: tonecount });\n}\nmsg.payload.tonecount = tonecount;\nreturn msg;\n",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 240,
-        "y": 320,
-        "wires": [
-            [
-                "d5ada4e1138f4e8d",
-                "a39968580711d7d2"
-            ]
-        ]
-    },
-    {
-        "id": "1f5e15ded75d8dab",
-        "type": "debug",
-        "z": "c0ad280f2a406602",
-        "name": "debug 4",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 900,
-        "y": 360,
-        "wires": []
-    },
-    {
-        "id": "d5ada4e1138f4e8d",
-        "type": "switch",
-        "z": "c0ad280f2a406602",
-        "name": "",
-        "property": "payload.tonecount",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "gte",
-                "v": "1",
-                "vt": "str"
-            },
-            {
-                "t": "lt",
-                "v": "1",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 2,
-        "x": 410,
-        "y": 320,
-        "wires": [
-            [
-                "d1e5e6b30c5451c3"
-            ],
-            [
-                "9b42865c8796de6b"
-            ]
-        ]
-    },
-    {
-        "id": "680177b4db881a4e",
-        "type": "debug",
-        "z": "c0ad280f2a406602",
-        "name": "debug 5",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 900,
-        "y": 400,
-        "wires": []
-    },
-    {
-        "id": "a39968580711d7d2",
-        "type": "debug",
-        "z": "c0ad280f2a406602",
-        "name": "debug 3",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 420,
-        "y": 360,
-        "wires": []
-    },
-    {
-        "id": "d1e5e6b30c5451c3",
-        "type": "function",
-        "z": "c0ad280f2a406602",
-        "name": "format email",
-        "func": "msg.topic = \"Tones Detected - [\" + msg.payload.talkgroup_alpha_tag + \"]\";\nmsg.from = \"geometrix@gmail.com\";\n\n\nvar message = [];\n\nmessage.push(\"Tones Detected for \");\nmessage.push(msg.payload.talkgroup_alpha_tag);\n\nmessage.push(\"\\n\\n\");\nmessage.push(\"Tones: \\n\\nQUICK CALL:\");\nmessage.push(JSON.stringify(msg.payload.quick_call));\nmessage.push(\"\\n\\nLONG: \");\nmessage.push(JSON.stringify(msg.payload.long));\nmessage.push(\"\\n\\nHI LOW: \");\nmessage.push(JSON.stringify(msg.payload.hi_low));\nmessage.push(\"\\n\\nDTMF: \");\nmessage.push(JSON.stringify(msg.payload.dtmf));\nmessage.push(\"\\n\\n\");\nmsg.payload = message.join(\"\");\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 610,
-        "y": 320,
-        "wires": [
-            [
-                "70b90011e894763a",
-                "1f5e15ded75d8dab"
-            ]
-        ]
-    },
-    {
-        "id": "9b42865c8796de6b",
-        "type": "function",
-        "z": "c0ad280f2a406602",
-        "name": "format email",
-        "func": "msg.topic = \"Tones Detected - [\" + msg.payload.talkgroup_alpha_tag + \"]\";\nmsg.from = \"geometrix@gmail.com\";\n\n  \nvar message = [];\n\nmessage.push(\"Tones Detected for \");\nmessage.push(msg.payload.talkgroup_alpha_tag);\n\nmessage.push(\"\\n\\n\");\nmessage.push(\"Tones: \\n\\nQUICK CALL:\");\nmessage.push(JSON.stringify(msg.payload.quick_call));\nmessage.push(\"\\n\\nLONG: \");\nmessage.push(JSON.stringify(msg.payload.long));\nmessage.push(\"\\n\\nHI LOW: \");\nmessage.push(JSON.stringify(msg.payload.hi_low));\nmessage.push(\"\\n\\nDTMF: \");\nmessage.push(JSON.stringify(msg.payload.dtmf));\nmessage.push(\"\\n\\n\");\nmsg.payload=message.join(\"\");\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 610,
-        "y": 360,
-        "wires": [
-            [
-                "680177b4db881a4e"
-            ]
-        ]
-    },
-    {
-        "id": "70b90011e894763a",
-        "type": "e-mail",
-        "z": "c0ad280f2a406602",
-        "server": "email-smtp.us-east-1.amazonaws.com",
-        "port": "587",
-        "authtype": "BASIC",
-        "saslformat": true,
-        "token": "oauth2Response.access_token",
-        "secure": false,
-        "tls": false,
-        "name": "geometrix@gmail.com",
-        "dname": "EmailMe",
-        "x": 900,
-        "y": 320,
         "wires": []
     },
     {
@@ -1188,13 +1017,13 @@
         "name": "debug 16",
         "active": false,
         "tosidebar": true,
-        "console": true,
+        "console": false,
         "tostatus": false,
         "complete": "true",
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 450,
+        "x": 440,
         "y": 40,
         "wires": []
     },
@@ -1287,13 +1116,13 @@
         "name": "debug 19",
         "active": false,
         "tosidebar": true,
-        "console": true,
+        "console": false,
         "tostatus": false,
         "complete": "true",
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 790,
+        "x": 780,
         "y": 140,
         "wires": []
     },
@@ -1328,8 +1157,8 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 250,
-        "y": 240,
+        "x": 290,
+        "y": 320,
         "wires": [
             [
                 "cc4ffd52b0bb1212",
@@ -1350,8 +1179,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 460,
-        "y": 240,
+        "x": 500,
+        "y": 320,
         "wires": []
     },
     {
@@ -1367,8 +1196,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1100,
-        "y": 400,
+        "x": 1220,
+        "y": 120,
         "wires": []
     },
     {
@@ -1393,8 +1222,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 450,
-        "y": 320,
+        "x": 490,
+        "y": 400,
         "wires": [
             [
                 "87f772649bcbe86c"
@@ -1409,7 +1238,7 @@
         "type": "debug",
         "z": "0da004d3b02fc52a",
         "name": "debug 24",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -1417,7 +1246,7 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1100,
+        "x": 1000,
         "y": 440,
         "wires": []
     },
@@ -1433,12 +1262,11 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 750,
-        "y": 320,
+        "x": 790,
+        "y": 400,
         "wires": [
             [
-                "910ed3d2075f9408",
-                "cc284d3c41d7e75a"
+                "910ed3d2075f9408"
             ]
         ]
     },
@@ -1454,8 +1282,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 810,
-        "y": 400,
+        "x": 790,
+        "y": 440,
         "wires": [
             [
                 "18485060217f9c5c"
@@ -1475,8 +1303,8 @@
         "tls": false,
         "name": "geometrix@gmail.com",
         "dname": "EmailMe",
-        "x": 1100,
-        "y": 360,
+        "x": 1000,
+        "y": 400,
         "wires": []
     },
     {
@@ -1490,8 +1318,8 @@
         "createDir": false,
         "overwriteFile": "false",
         "encoding": "none",
-        "x": 530,
-        "y": 280,
+        "x": 570,
+        "y": 360,
         "wires": [
             []
         ]
@@ -1544,7 +1372,188 @@
             [
                 "79134278d91d6e9a"
             ],
-            []
+            [
+                "cc284d3c41d7e75a"
+            ]
         ]
+    },
+    {
+        "id": "14a9170f864c715a",
+        "type": "link in",
+        "z": "b1bc9b62280884fb",
+        "name": "link in 1",
+        "links": [
+            "3a2945a20aad22ad"
+        ],
+        "x": 135,
+        "y": 100,
+        "wires": [
+            [
+                "4e6be94183dca0c7"
+            ]
+        ]
+    },
+    {
+        "id": "4e6be94183dca0c7",
+        "type": "function",
+        "z": "b1bc9b62280884fb",
+        "name": "Check for tones",
+        "func": "var dots = context.get(\"dots\", \"memoryOnly\") || \"ring\";\ndots = (dots == \"ring\") ? \"dot\" : \"ring\"\ncontext.set(\"dots\", dots, \"memoryOnly\")\n\nvar tonecount = 0\n\nif (msg.payload.quick_call !== undefined && msg.payload.hi_low !== undefined && msg.payload.long !== undefined){\n    tonecount = msg.payload.quick_call.length + msg.payload.hi_low.length + msg.payload.long.length;\n}\n\n\nnode.status({ fill: \"red\", shape: dots, text: tonecount});\nif (tonecount >= 1){\n    node.status({ fill: \"green\", shape: dots, text: tonecount });\n}\nmsg.payload.tonecount = tonecount;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 100,
+        "wires": [
+            [
+                "d5ada4e1138f4e8d",
+                "a39968580711d7d2"
+            ]
+        ]
+    },
+    {
+        "id": "1f5e15ded75d8dab",
+        "type": "debug",
+        "z": "b1bc9b62280884fb",
+        "name": "debug 4",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 950,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "d5ada4e1138f4e8d",
+        "type": "switch",
+        "z": "b1bc9b62280884fb",
+        "name": "",
+        "property": "payload.tonecount",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gte",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "t": "lt",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 460,
+        "y": 100,
+        "wires": [
+            [
+                "d1e5e6b30c5451c3"
+            ],
+            [
+                "9b42865c8796de6b"
+            ]
+        ]
+    },
+    {
+        "id": "680177b4db881a4e",
+        "type": "debug",
+        "z": "b1bc9b62280884fb",
+        "name": "debug 5",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 950,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "a39968580711d7d2",
+        "type": "debug",
+        "z": "b1bc9b62280884fb",
+        "name": "debug 3",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 470,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "d1e5e6b30c5451c3",
+        "type": "function",
+        "z": "b1bc9b62280884fb",
+        "name": "format email",
+        "func": "msg.topic = \"Tones Detected - [\" + msg.payload.talkgroup_alpha_tag + \"]\";\nmsg.from = \"geometrix@gmail.com\";\n\n\nvar message = [];\n\nmessage.push(\"Tones Detected for \");\nmessage.push(msg.payload.talkgroup_alpha_tag);\n\nmessage.push(\"\\n\\n\");\nmessage.push(\"Tones: \\n\\nQUICK CALL:\");\nmessage.push(JSON.stringify(msg.payload.quick_call));\nmessage.push(\"\\n\\nLONG: \");\nmessage.push(JSON.stringify(msg.payload.long));\nmessage.push(\"\\n\\nHI LOW: \");\nmessage.push(JSON.stringify(msg.payload.hi_low));\nmessage.push(\"\\n\\nDTMF: \");\nmessage.push(JSON.stringify(msg.payload.dtmf));\nmessage.push(\"\\n\\n\");\nmsg.payload = message.join(\"\");\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 100,
+        "wires": [
+            [
+                "70b90011e894763a",
+                "1f5e15ded75d8dab"
+            ]
+        ]
+    },
+    {
+        "id": "9b42865c8796de6b",
+        "type": "function",
+        "z": "b1bc9b62280884fb",
+        "name": "format email",
+        "func": "msg.topic = \"Tones Detected - [\" + msg.payload.talkgroup_alpha_tag + \"]\";\nmsg.from = \"geometrix@gmail.com\";\n\n  \nvar message = [];\n\nmessage.push(\"Tones Detected for \");\nmessage.push(msg.payload.talkgroup_alpha_tag);\n\nmessage.push(\"\\n\\n\");\nmessage.push(\"Tones: \\n\\nQUICK CALL:\");\nmessage.push(JSON.stringify(msg.payload.quick_call));\nmessage.push(\"\\n\\nLONG: \");\nmessage.push(JSON.stringify(msg.payload.long));\nmessage.push(\"\\n\\nHI LOW: \");\nmessage.push(JSON.stringify(msg.payload.hi_low));\nmessage.push(\"\\n\\nDTMF: \");\nmessage.push(JSON.stringify(msg.payload.dtmf));\nmessage.push(\"\\n\\n\");\nmsg.payload=message.join(\"\");\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 140,
+        "wires": [
+            [
+                "680177b4db881a4e"
+            ]
+        ]
+    },
+    {
+        "id": "70b90011e894763a",
+        "type": "e-mail",
+        "z": "b1bc9b62280884fb",
+        "server": "email-smtp.us-east-1.amazonaws.com",
+        "port": "587",
+        "authtype": "BASIC",
+        "saslformat": true,
+        "token": "oauth2Response.access_token",
+        "secure": false,
+        "tls": false,
+        "name": "geometrix@gmail.com",
+        "dname": "EmailMe",
+        "x": 950,
+        "y": 100,
+        "wires": []
     }
 ]
