@@ -5,6 +5,7 @@ services:
     build: /opt/stacks/trunk-recorder/trunk-recorder
     container_name: trunk-recorder
     restart: unless-stopped
+    command: trunk-recorder --config=/app/config.json
     privileged: true
     working_dir: /app
     volumes:

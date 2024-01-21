@@ -1,0 +1,197 @@
+{
+    "ver": 2,
+    "captureDir": "/app/capture",
+    "logFile": true,
+    "logDir": "/app/logs",
+    "logLevel": "debug",
+    "sources": [
+        {
+            "center": 483109375,
+            "rate": 2048000,
+            "error": 0,
+            "gain": 40.2,
+            "debugRecorders": 0,
+            "digitalRecoders": 4,
+            "driver": "osmosdr",
+            "device": "rtl=0"
+        },
+        {
+            "center": 155329375,
+            "rate": 2048000,
+            "error": 250,
+            "gain": 40.2,
+            "debugRecorders": 0,
+            "digitalRecoders": 4,
+            "driver": "osmosdr",
+            "device": "rtl=1"
+        }
+    ],
+    "systems": [
+        {
+            "shortName": "Westford",
+            "type": "conventional",
+            "channelFile": "./systemconfigs/Westford.csv",
+            "talkgroupsFile": "./talkgroups/Westford_TG.csv",
+            "talkgroupDisplayFormat": "id_tag",
+            "audioArchive": true,
+            "callLog": true,
+            "squelch": -27,
+            "decodeMDC": true,
+            "enabled": true
+        },
+        {
+            "shortName": "Acton",
+            "type": "conventional",
+            "channelFile": "./systemconfigs/Acton.csv",
+            "talkgroupsFile": "./talkgroups/Acton_TG.csv",
+            "talkgroupDisplayFormat": "id_tag",
+            "callLog": true,
+            "squelch": -35,
+            "decodeMDC": true,
+            "analogLevels": 20,
+            "enabled": true
+        },
+        {
+            "shortName": "Littleton",
+            "type": "conventionalP25",
+            "channelFile": "./systemconfigs/Littleton.csv",
+            "talkgroupsFile": "./talkgroups/Littleton_TG.csv",
+            "talkgroupDisplayFormat": "id_tag",
+            "callLog": true,
+            "squelch": -25,
+            "digitalLevels": 4,
+            "enabled": true
+        },
+        {
+            "shortName": "Chelmsford",
+            "type": "conventional",
+            "channelFile": "./systemconfigs/Chelmsford.csv",
+            "talkgroupsFile": "./talkgroups/Chelmsford_TG.csv",
+            "talkgroupDisplayFormat": "id_tag",
+            "audioArchive": true,
+            "callLog": true,
+            "squelch": -33,
+            "decodeMDC": true,
+            "enabled": false
+        },
+        {
+            "shortName": "Groton",
+            "type": "conventional",
+            "channelFile": "./systemconfigs/Groton.csv",
+            "talkgroupsFile": "./talkgroups/Groton_TG.csv",
+            "talkgroupDisplayFormat": "id_tag",
+            "audioArchive": true,
+            "callLog": true,
+            "squelch": -35,
+            "analogLevels": 20,
+            "decodeMDC": true,
+            "decodeFSync": false,
+            "enabled": true
+        },
+        {
+            "shortName": "Concord",
+            "type": "conventional",
+            "channelFile": "./systemconfigs/Concord.csv",
+            "audioArchive": true,
+            "callLog": true,
+            "squelch": -27,
+            "decodeMDC": true,
+            "decodeFSync": true,
+            "enabled": false
+        },
+        {
+            "shortName": "Boxborough",
+            "type": "conventionalP25",
+            "channelFile": "./systemconfigs/Boxborough.csv",
+            "callLog": true,
+            "squelch": -50,
+            "digitalLevels": 2,
+            "enabled": false
+        },
+        {
+            "shortName": "Tewksbury",
+            "type": "conventionalP25",
+            "channelFile": "./systemconfigs/Tewksbury.csv",
+            "talkgroupsFile": "./talkgroups/Tewksbury_TG.csv",
+            "talkgroupDisplayFormat": "id_tag",
+            "callLog": true,
+            "squelch": -40,
+            "digitalLevels": 6,
+            "enabled": true
+        },
+        {
+            "shortName": "Billerica",
+            "type": "conventionalP25",
+            "channelFile": "./systemconfigs/Billerica.csv",
+            "callLog": true,
+            "squelch": -45,
+            "digitalLevels": 4,
+            "enabled": true
+        }
+    ],
+    "plugins": [
+        {
+            "name": "rdioscanner_uploader",
+            "library": "librdioscanner_uploader.so",
+            "server": "http://rdio-scanner:3000",
+            "systems": [
+                {
+                    "shortName": "Westford",
+                    "apiKey": "b11b1880-471b-4550-b8d7-84bdf2a3a0eb",
+                    "systemId": 1
+                },
+                {
+                    "shortName": "Littleton",
+                    "apiKey": "b11b1880-471b-4550-b8d7-84bdf2a3a0eb",
+                    "systemId": 7
+                },
+                {
+                    "shortName": "Acton",
+                    "apiKey": "b11b1880-471b-4550-b8d7-84bdf2a3a0eb",
+                    "systemId": 8
+                },
+                {
+                    "shortName": "Tewksbury",
+                    "apiKey": "b11b1880-471b-4550-b8d7-84bdf2a3a0eb",
+                    "systemId": 11
+                },
+                {
+                    "shortName": "Chelmsford",
+                    "apiKey": "b11b1880-471b-4550-b8d7-84bdf2a3a0eb",
+                    "systemId": 5
+                },
+                {
+                    "shortName": "Groton",
+                    "apiKey": "b11b1880-471b-4550-b8d7-84bdf2a3a0eb",
+                    "systemId": 6
+                },
+                {
+                    "shortName": "Concord",
+                    "apiKey": "b11b1880-471b-4550-b8d7-84bdf2a3a0eb",
+                    "systemId": 9
+                },
+                {
+                    "shortName": "Boxborough",
+                    "apiKey": "b11b1880-471b-4550-b8d7-84bdf2a3a0eb",
+                    "systemId": 10
+                },
+                {
+                    "shortName": "Billerica",
+                    "apiKey": "b11b1880-471b-4550-b8d7-84bdf2a3a0eb",
+                    "systemId": 4
+                }
+            ]
+        },
+        {
+            "name": "MQTTStatus",
+            "library": "libmqtt_status_plugin.so",
+            "broker": "tcp://mosquitto:1883",
+            "topic": "trunkrecorder/status",
+            "message_topic": "trunkrecorder/msg",
+            "unit_topic": "trunkrecorder/unit",
+            "username": "trunkrecorder",
+            "password": "TrunkRecorder",
+            "console_logs": false
+        }
+    ]
+}

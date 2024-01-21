@@ -1,0 +1,68 @@
+{
+    "ver": 2,
+    "captureDir": "/app/capture",
+    "logFile": true,
+    "logDir": "/app/logs",
+    "logLevel": "debug",
+    "sources": [
+        {
+            "center": 483109375,
+            "rate": 2048000,
+            "error": 0,
+            "gain": 40.2,
+            "debugRecorders": 0,
+            "digitalRecoders": 4,
+            "driver": "osmosdr",
+            "device": "rtl=0"
+        },
+        {
+            "center": 471000000,
+            "rate": 2048000,
+            "error": 250,
+            "gain": 40.2,
+            "debugRecorders": 0,
+            "digitalRecoders": 4,
+            "driver": "osmosdr",
+            "device": "rtl=1"
+        }
+    ],
+    "systems": [
+        {
+            "shortName": "Westford",
+            "type": "conventional",
+            "channelFile": "./systemconfigs/Westford.csv",
+            "talkgroupsFile": "./talkgroups/Westford_TG.csv",
+            "talkgroupDisplayFormat": "id_tag",
+            "audioArchive": true,
+            "callLog": true,
+            "squelch": -27,
+            "decodeMDC": true,
+            "enabled": true
+        }
+    ],
+    "plugins": [
+        {
+            "name": "rdioscanner_uploader",
+            "library": "librdioscanner_uploader.so",
+            "server": "http://rdio-scanner:3000",
+            "systems": [
+                {
+                    "shortName": "Westford",
+                    "apiKey": "b11b1880-471b-4550-b8d7-84bdf2a3a0eb",
+                    "systemId": 1
+                }
+            ]
+        },
+        {
+            "name": "MQTTStatus",
+            "library": "libmqtt_status_plugin.so",
+            "broker": "tcp://mosquitto:1883",
+            "topic": "trunkrecorder/status",
+            "message_topic": "trunkrecorder/msg",
+            "unit_topic": "trunkrecorder/unit",
+            "username": "trunkrecorder",
+            "password": "TrunkRecorder",
+            "console_logs": false
+        }
+    ]
+}

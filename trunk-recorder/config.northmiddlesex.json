@@ -1,0 +1,107 @@
+{
+    "ver": 2,
+    "captureDir": "/app/capture",
+    "logFile": true,
+    "logDir": "/app/logs",
+    "logLevel": "trace",
+    "uploadServer": "https://api.openmhz.com",
+    "sources": [
+        {
+            "center": 483000000,
+            "rate": 2400000,
+            "error": 0,
+            "gain": 40.2,
+            "debugRecorders": 0,
+            "digitalRecoders": 4,
+            "driver": "osmosdr",
+            "device": "rtl=0"
+        },
+        {
+            "center": 155329375,
+            "rate": 2048000,
+            "error": 250,
+            "gain": 40.2,
+            "debugRecorders": 0,
+            "digitalRecoders": 4,
+            "driver": "osmosdr",
+            "device": "rtl=1"
+        }
+    ],
+    "systems": [
+        {
+            "shortName": "westford",
+            "type": "conventional",
+            "channelFile": "./systemconfigs/Westford.csv",
+            "talkgroupsFile": "./talkgroups/Westford_TG.csv",
+            "talkgroupDisplayFormat": "id_tag",
+            "audioArchive": true,
+            "callLog": true,
+            "squelch": -30,
+            "decodeMDC": true,
+            "enabled": true,
+            "apiKey": "c5cf4a524de05c7d20c5575c52693f34"
+        },
+        {
+            "shortName": "westford",
+            "type": "conventional",
+            "channelFile": "./systemconfigs/Acton.csv",
+            "talkgroupsFile": "./talkgroups/Acton_TG.csv",
+            "talkgroupDisplayFormat": "id_tag",
+            "callLog": true,
+            "squelch": -33,
+            "decodeMDC": true,
+            "analogLevels": 20,
+            "enabled": true,
+            "apiKey": "c5cf4a524de05c7d20c5575c52693f34"
+        },
+        {
+            "shortName": "westford",
+            "type": "conventionalP25",
+            "channelFile": "./systemconfigs/Littleton.csv",
+            "talkgroupsFile": "./talkgroups/Littleton_TG.csv",
+            "talkgroupDisplayFormat": "id_tag",
+            "callLog": true,
+            "squelch": -25,
+            "digitalLevels": 4,
+            "enabled": true,
+            "apiKey": "c5cf4a524de05c7d20c5575c52693f34"
+        },
+        {
+            "shortName": "westford",
+            "type": "conventionalP25",
+            "channelFile": "./systemconfigs/Tewksbury.csv",
+            "talkgroupsFile": "./talkgroups/Tewksbury_TG.csv",
+            "talkgroupDisplayFormat": "id_tag",
+            "callLog": true,
+            "squelch": -40,
+            "digitalLevels": 6,
+            "enabled": true,
+            "apiKey": "c5cf4a524de05c7d20c5575c52693f34"
+        }
+    ],
+    "plugins": [
+        {
+            "name": "rdioscanner_uploader",
+            "library": "librdioscanner_uploader.so",
+            "server": "http://rdio-scanner:3000",
+            "systems": [
+                {
+                    "shortName": "westford",
+                    "apiKey": "a376b39b-92e1-43c0-98db-e2df157ab38b",
+                    "systemId": 1
+                }
+            ]
+        },
+        {
+            "name": "MQTTStatus",
+            "library": "libmqtt_status_plugin.so",
+            "broker": "tcp://mosquitto:1883",
+            "topic": "trunkrecorder/status",
+            "message_topic": "trunkrecorder/msg",
+            "unit_topic": "trunkrecorder/unit",
+            "username": "trunkrecorder",
+            "password": "TrunkRecorder",
+            "console_logs": false
+        }
+    ]
+}
